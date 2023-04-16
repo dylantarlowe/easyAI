@@ -61,36 +61,39 @@ const Sidebar = ({ models }: Props) => {
           </div>
         </div>
         <p className="font-inter text-white pt-10">My Models</p>
-        {Object.values(models).map((model: any, i: number) => (
-          <div key={i}>
-            <button
-              onClick={() => router.push("/dashboard/" + model.title)}
-              className={`flex items-center justify-between h-10 w-full text-xs text-left px-4 text-${
-                colors[i % 5]
-              } bg-${colors[i % 5]}/20 border rounded border-${colors[i % 5]}`}
-            >
-              <p>{model.title}</p>
-              {/* ripple circles inside each other with empty center */}
-              <div
-                className={`w-4 h-4 relative border-2 border-${
+        {models &&
+          Object.values(models).map((model: any, i: number) => (
+            <div key={i}>
+              <button
+                onClick={() => router.push("/dashboard/" + model.title)}
+                className={`flex items-center justify-between h-10 w-full text-xs text-left px-4 text-${
                   colors[i % 5]
-                }/30 rounded-full`}
+                } bg-${colors[i % 5]}/20 border rounded border-${
+                  colors[i % 5]
+                }`}
               >
+                <p>{model.title}</p>
+                {/* ripple circles inside each other with empty center */}
                 <div
-                  className={`w-3 h-3 relative border-2 border-${
+                  className={`w-4 h-4 relative border-2 border-${
                     colors[i % 5]
-                  }/50 rounded-full`}
+                  }/30 rounded-full`}
                 >
                   <div
-                    className={`w-2 h-2 absolute border-2 border-${
+                    className={`w-3 h-3 relative border-2 border-${
                       colors[i % 5]
-                    } rounded-full`}
-                  ></div>
+                    }/50 rounded-full`}
+                  >
+                    <div
+                      className={`w-2 h-2 absolute border-2 border-${
+                        colors[i % 5]
+                      } rounded-full`}
+                    ></div>
+                  </div>
                 </div>
-              </div>
-            </button>
-          </div>
-        ))}
+              </button>
+            </div>
+          ))}
         <button
           onClick={() => router.push("/newModel")}
           className={`h-10 w-full border border-dashed rounded border-white text-xs text-center px-4 text-white`}

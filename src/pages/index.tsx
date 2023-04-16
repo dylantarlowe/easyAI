@@ -41,12 +41,16 @@ export default function Home() {
       return;
     } else {
       console.log("got user");
+      console.log(user);
     }
 
     if (status && status.ok) {
-      const models: any = Object.values(user.existingUser.models);
-      if (user.existingUser.models === null) router.push("/newModel");
-      else router.push("/dashboard/" + models[0].title);
+      if (user.existingUser.models || user.existingUser.models === undefined) {
+        router.push("/newModel");
+      } else {
+        const models: any = Object.values(user.existingUser.models);
+        router.push("/dashboard/" + models[0].title);
+      }
     } else if (status && !status.ok) alert("Invalid username or password");
     else console.log("no idea");
   };
