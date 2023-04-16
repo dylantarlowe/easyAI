@@ -26,7 +26,7 @@ const Sidebar = ({ models }: Props) => {
   }, [loaded]);
 
   return (
-    <div className="w-1/5 bg-[#07080a] ">
+    <div className="w-1/5 bg-[#07080a]">
       <button className="hidden text-blue border border-blue bg-blue/20"></button>
       <button className="hidden text-green border border-green bg-green/20"></button>
       <button className="hidden text-purple border border-purple bg-purple/20"></button>

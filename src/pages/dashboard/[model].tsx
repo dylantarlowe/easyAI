@@ -34,7 +34,10 @@ const Dashboard = ({ session, userInfo }: Props) => {
             />
             <Visualizations />
           </div>
-          <YourModel metrics={model && userInfo.models[model].metrics} />
+          <YourModel
+            metrics={model && userInfo.models[model].metrics}
+            task={model && userInfo.models[model].task}
+          />
         </div>
       </div>
     </div>

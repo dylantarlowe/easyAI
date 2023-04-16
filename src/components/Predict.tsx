@@ -17,8 +17,11 @@ const Predict = ({ userId, modelId, task }: Props) => {
   const { data: session, status } = useSession();
 
   const handlePredict = async () => {
+    if (!file[0])
+      return alert("Please upload a file to predict with your model.");
     let formData = new FormData();
     formData.append("file", file[0]);
+    formData.append("projectID", modelId);
 
     const res = await axios({
       method: "post",
@@ -26,8 +29,22 @@ const Predict = ({ userId, modelId, task }: Props) => {
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     });
-
     console.log(res);
+    // create file in browser
+    const fileName = modelId?.toLowerCase() + "_predictions";
+    const blob = new Blob([res.data]);
+    const href = URL.createObjectURL(blob);
+
+    // create "a" HTLM element with href to file
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = fileName + ".csv";
+    document.body.appendChild(link);
+    link.click();
+
+    // clean up "a" element & remove ObjectURL
+    document.body.removeChild(link);
+    URL.revokeObjectURL(href);
   };
 
   const handleDownload = async () => {
@@ -54,7 +71,7 @@ const Predict = ({ userId, modelId, task }: Props) => {
       document.body.removeChild(link);
       URL.revokeObjectURL(href);
     } catch (err) {
-      alert("Error downloading model");
+      alert("Error downloading model" + err);
     }
   };
 
