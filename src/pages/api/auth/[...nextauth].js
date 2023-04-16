@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-
 import { verifyPassword } from '../../../../lib/mongo/auth';
 import { connectToDatabase } from '../../../../lib/mongo/db';
 
@@ -39,5 +38,4 @@ export default NextAuth({
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
 });
