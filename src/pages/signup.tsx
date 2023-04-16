@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Logo from "@/images/aiWhite.svg";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 type Props = {};
 
@@ -61,12 +62,12 @@ const Signup = (props: Props) => {
       <div className="flex flex-col justify-start w-1/2">
         <div className="flex flex-row justify-start items-baseline space-x-2  pb-2">
           <p className="text-lg font-medium">Sign Up</p>
-          <a
+          <Link
             href="/"
             className="cursor-pointer text-xs text-blue hover:text-lightBlue"
           >
             Have an account? Log in here.
-          </a>
+          </Link>
         </div>
         <p className="text-sm py-1">Username</p>
         <input

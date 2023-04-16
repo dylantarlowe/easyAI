@@ -5,6 +5,7 @@ import Image from "next/image";
 import Logo from "@/images/aiWhite.svg";
 import { signIn } from "next-auth/react";
 import { connectToDatabase } from "../../lib/mongo/db";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -57,12 +58,12 @@ export default function Home() {
       <div className="flex flex-col justify-start w-1/2">
         <div className="flex flex-row justify-start items-baseline space-x-2 w-1/2 pb-2">
           <p className="text-lg font-medium">Log In</p>
-          <a
+          <Link
             href="/signup"
             className="cursor-pointer text-xs text-blue hover:text-lightBlue"
           >
             New? Sign up here.
-          </a>
+          </Link>
         </div>
         <p className="text-sm py-1">Username</p>
         <input
