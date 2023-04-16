@@ -17,7 +17,7 @@ type Props = {
   userInfo: any;
 };
 
-const newModel = ({ session, userInfo }: Props) => {
+const NewModel = ({ session, userInfo }: Props) => {
   const [selected, setSelected] = useState(0);
   const [title, setTitle] = useState("");
   const [file, setFile] = useState<any>();
@@ -190,4 +190,4 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default newModel;
+export default NewModel;

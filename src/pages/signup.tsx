@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 
 type Props = {};
 
-const signup = (props: Props) => {
+const Signup = (props: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -91,4 +91,4 @@ const signup = (props: Props) => {
   );
 };
 
-export default signup;
+export default Signup;

@@ -13,7 +13,7 @@ type Props = {
   userInfo: any;
 };
 
-const dashboard = ({ session, userInfo }: Props) => {
+const Dashboard = ({ session, userInfo }: Props) => {
   const router = useRouter();
   let { model } = router.query;
   const [loading, setLoading] = useState(true);
@@ -65,4 +65,4 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default dashboard;
+export default Dashboard;

@@ -4,7 +4,6 @@ import { HiOutlineDownload } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { BsArrowRight } from "react-icons/bs";
-import ArrayBufferCursor from "@/utils/unpickleModel.js";
 
 type Props = {
   userId: string;
