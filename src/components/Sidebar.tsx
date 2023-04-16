@@ -65,7 +65,9 @@ const Sidebar = ({ models }: Props) => {
           <div key={i}>
             <button
               onClick={() => router.push("/dashboard/" + model.title)}
-              className={`flex items-center justify-between h-10 w-full text-xs text-left px-4 text-${colors[i]} bg-${colors[i]}/20 border rounded border-${colors[i]}`}
+              className={`flex items-center justify-between h-10 w-full text-xs text-left px-4 text-${
+                colors[i % 5]
+              } bg-${colors[i % 5]}/20 border rounded border-${colors[i % 5]}`}
             >
               <p>{model.title}</p>
               {/* ripple circles inside each other with empty center */}
