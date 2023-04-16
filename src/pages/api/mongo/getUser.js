@@ -12,17 +12,20 @@ async function handler(req, res) {
   const client = await connectToDatabase();
 
   if (client) {
-    const db = client.db('easyAI');
+    console.log("client is connected")
+  }
 
-    const existingUser = await db.collection('users').findOne({ email: email });
+  const db = client.db('easyAI')  
 
-    if (existingUser) {
-      res.status(201).json({ existingUser });
-      client.close();
-    }
-    
+  const existingUser = await db.collection('users').findOne({ email: email }) 
+
+
+  if (existingUser) {
+    console.log("existingUser is true")
+    res.status(201).json({ existingUser });
+  }
+  else {
     res.status(422).json({ message: 'user not found' });
-    client.close();
   }
 }
 
