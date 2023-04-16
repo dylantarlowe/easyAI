@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Logo from "@/images/aiWhite.svg";
 import { signIn } from "next-auth/react";
-import { connectToDatabase } from "../../lib/mongo/db";
 import Link from "next/link";
 
 export default function Home() {
