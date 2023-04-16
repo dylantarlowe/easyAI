@@ -10,7 +10,13 @@ type Props = {
 };
 
 const Sidebar = ({ models }: Props) => {
-  const [colors, setColors] = useState(["blue", "green", "purple"]);
+  const [colors, setColors] = useState([
+    "blue",
+    "green",
+    "amber-500",
+    "purple",
+    "red-500",
+  ]);
   const [loaded, setLoaded] = useState(false);
 
   const router = useRouter();
@@ -24,12 +30,18 @@ const Sidebar = ({ models }: Props) => {
       <button className="hidden text-blue border border-blue bg-blue/20"></button>
       <button className="hidden text-green border border-green bg-green/20"></button>
       <button className="hidden text-purple border border-purple bg-purple/20"></button>
+      <button className="hidden text-amber-500 border border-amber-500 bg-amber-500/20"></button>
+      <button className="hidden text-red-500 border border-red-500 bg-red-500/20"></button>
       <button className="hidden  border border-blue/30"></button>
       <button className="hidden border border-blue/50"></button>
       <button className="hidden  border border-green/30"></button>
       <button className="hidden border border-green/50"></button>
       <button className="hidden  border border-purple/30"></button>
       <button className="hidden border border-purple/50"></button>
+      <button className="hidden  border border-amber-500/30"></button>
+      <button className="hidden border border-amber-500/50"></button>
+      <button className="hidden  border border-red-500/30"></button>
+      <button className="hidden border border-red-500/50"></button>
 
       <div className="flex flex-col p-5 items-left h-screen space-y-4">
         <div className="flex flex-row justify-between items-center w-full">
@@ -58,13 +70,19 @@ const Sidebar = ({ models }: Props) => {
               <p>{model.title}</p>
               {/* ripple circles inside each other with empty center */}
               <div
-                className={`w-4 h-4 relative border-2 border-${colors[i]}/30 rounded-full`}
+                className={`w-4 h-4 relative border-2 border-${
+                  colors[i % 5]
+                }/30 rounded-full`}
               >
                 <div
-                  className={`w-3 h-3 relative border-2 border-${colors[i]}/50 rounded-full`}
+                  className={`w-3 h-3 relative border-2 border-${
+                    colors[i % 5]
+                  }/50 rounded-full`}
                 >
                   <div
-                    className={`w-2 h-2 absolute border-2 border-${colors[i]} rounded-full`}
+                    className={`w-2 h-2 absolute border-2 border-${
+                      colors[i % 5]
+                    } rounded-full`}
                   ></div>
                 </div>
               </div>

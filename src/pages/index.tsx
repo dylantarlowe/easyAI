@@ -38,8 +38,9 @@ export default function Home() {
     const user = await res.json();
 
     if (status && status.ok) {
+      const models: any = Object.values(user.existingUser.models);
       if (user.existingUser.models === null) router.push("/newModel");
-      else router.push("/dashboard/" + user.existingUser.models[0].title);
+      else router.push("/dashboard/" + models[0].title);
     } else if (status && !status.ok) alert("Invalid username or password");
     else console.log("no idea");
   };
@@ -70,6 +71,7 @@ export default function Home() {
         />
         <p className="text-sm py-1">Password</p>
         <input
+          type="password"
           onChange={(e) => setPassword(e.target.value)}
           className="border-2 border-gray-300 rounded-md p-2"
         />

@@ -27,7 +27,11 @@ const dashboard = ({ session, userInfo }: Props) => {
         {/* <button onClick={() => handleClick()}>Test</button> */}
         <div className="flex flex-row justify-even space-x-6  w-full">
           <div className="w-3/5 flex flex-col space-y-6">
-            <Predict />
+            <Predict
+              userId={userInfo._id}
+              modelId={model}
+              task={model && userInfo.models[model].task}
+            />
             <Visualizations />
           </div>
           <YourModel metrics={model && userInfo.models[model].metrics} />

@@ -4,47 +4,76 @@ import { HiOutlineDownload } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { BsArrowRight } from "react-icons/bs";
+import ArrayBufferCursor from "@/utils/unpickleModel.js";
 
-type Props = {};
+type Props = {
+  userId: string;
+  modelId?: string;
+  task?: string;
+};
 
-const Predict = (props: Props) => {
+const Predict = ({ userId, modelId, task }: Props) => {
   const [file, setFile] = useState<any>();
 
   const { data: session, status } = useSession();
 
   const handlePredict = async () => {
-    console.log(file);
-
     let formData = new FormData();
     formData.append("file", file[0]);
-    const email = session?.user?.email?.toString();
-    if (email && email.length > 0) {
-      formData.append("user", email);
-    } else return;
 
     const res = await axios({
       method: "post",
-      url: "https://liamkyoung.live/predict",
+      url: "https://liamkyoung.live/predict/" + userId,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     });
+
+    console.log(res);
   };
 
   const handleDownload = async () => {
-    const res = await axios({
-      method: "get",
-      url: "https://liamkyoung.live/download",
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    try {
+      const res = await axios({
+        method: "get",
+        url: "https://liamkyoung.live/download/" + userId + "/" + modelId,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(res);
+      // create file in browser
+      const fileName = modelId?.toLowerCase() + "_model";
+      const blob = new Blob([res.data]);
+      const href = URL.createObjectURL(blob);
+
+      // create "a" HTLM element with href to file
+      const link = document.createElement("a");
+      link.href = href;
+      link.download = fileName + ".h5";
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    } catch (err) {
+      alert("Error downloading model");
+    }
   };
 
   return (
     <div className="h-60 rounded-sm bg-white py-4 px-8 space-y-2">
       <div>
         <p className="text-base pb-1 text-gray-400">Predict with your model</p>
-        <p className="text-xs text-gray-400">
-          Upload a photo to discover the species of elephant
-        </p>
+        {task === "classification" && (
+          <p className="text-xs text-gray-400">
+            Upload data to classify {modelId?.toLowerCase()} with your model.
+          </p>
+        )}
+        {task === "regression" && (
+          <p className="text-xs text-gray-400">
+            Upload data to learn trends about {modelId?.toLowerCase()} with your
+            model.
+          </p>
+        )}
       </div>
       <div className="w-full text-gray-400">
         <Dropzone file={file} setFile={setFile} />

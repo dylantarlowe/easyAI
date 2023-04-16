@@ -1,4 +1,5 @@
 import React from "react";
+import { BsRocketTakeoff } from "react-icons/bs";
 
 type Props = {
   metrics: any;
@@ -12,7 +13,10 @@ const YourModel = ({ metrics }: Props) => {
         <div className="flex flex-row justify-between ">
           <p className="text-xs text-gray-400">Accuracy</p>
           <p className="text-xs text-black">
-            {metrics?.accuracy ? metrics.accuracy : "40"}%
+            {metrics?.accuracy
+              ? Math.round(metrics.accuracy * 10000) / 100
+              : "40"}
+            %
           </p>
         </div>
         <div className="h-[.5px] w-full bg-gray-200" />
@@ -40,26 +44,35 @@ const YourModel = ({ metrics }: Props) => {
       </div>
       <div className="flex flex-col p-5 space-y-3">
         <p className="text-sm text-gray-400">Enhanced Performance Metrics</p>
-        <div className="flex flex-row justify-between ">
-          <p className="text-xs text-gray-400">True Positives</p>
-          <p className="text-xs text-black">60</p>
-        </div>
-        <div className="h-[.5px] w-full bg-gray-200" />
-        <div className="flex flex-row justify-between ">
-          <p className="text-xs text-gray-400">True Negatives</p>
-          <p className="text-xs text-black">23</p>
-        </div>
-        <div className="h-[.5px] w-full bg-gray-200" />
-        <div className="flex flex-row justify-between ">
-          <p className="text-xs text-gray-400">False Positives</p>
-          <p className="text-xs text-black">9</p>
-        </div>
-        <div className="h-[.5px] w-full bg-gray-200" />
-        <div className="flex flex-row justify-between ">
-          <p className="text-xs text-gray-400">False Negatives</p>
-          <p className="text-xs text-black">8</p>
-        </div>
-        <div className="h-[.25px] w-full bg-gray-100" />
+        {metrics && metrics.length > 4 ? (
+          <>
+            <div className="flex flex-row justify-between ">
+              <p className="text-xs text-gray-400">True Positives</p>
+              <p className="text-xs text-black">60</p>
+            </div>
+            <div className="h-[.5px] w-full bg-gray-200" />
+            <div className="flex flex-row justify-between ">
+              <p className="text-xs text-gray-400">True Negatives</p>
+              <p className="text-xs text-black">23</p>
+            </div>
+            <div className="h-[.5px] w-full bg-gray-200" />
+            <div className="flex flex-row justify-between ">
+              <p className="text-xs text-gray-400">False Positives</p>
+              <p className="text-xs text-black">9</p>
+            </div>
+            <div className="h-[.5px] w-full bg-gray-200" />
+            <div className="flex flex-row justify-between ">
+              <p className="text-xs text-gray-400">False Negatives</p>
+              <p className="text-xs text-black">8</p>
+            </div>
+            <div className="h-[.25px] w-full bg-gray-100" />
+          </>
+        ) : (
+          <div className="h-24 w-full mt-2 p-2 space-y-1.5 flex flex-col text-xs justify-center items-center border border-dashed border-gray-300 rounded">
+            <BsRocketTakeoff size={20} className="text-gray-400" />
+            <p className="text-gray-400 tracking-widest">coming soon...</p>
+          </div>
+        )}
       </div>
     </div>
   );
