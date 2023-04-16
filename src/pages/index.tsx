@@ -26,33 +26,35 @@ export default function Home() {
 
     console.log("getting user");
     // get user info from mongodb
-    const res = await fetch("/api/mongo/getUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-      }),
-    });
-    const user = await res.json();
-    if (!res.ok) {
-      alert(user.message || "Bad response from getUser!");
-      return;
-    } else {
-      console.log("got user");
-      console.log(user);
-    }
+    try {
+      const res = await fetch("/api/mongo/getUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
 
-    if (status && status.ok) {
-      if (user.existingUser.models || user.existingUser.models === undefined) {
-        router.push("/newModel");
-      } else {
-        const models: any = Object.values(user.existingUser.models);
-        router.push("/dashboard/" + models[0].title);
-      }
-    } else if (status && !status.ok) alert("Invalid username or password");
-    else console.log("no idea");
+      const user = await res.json();
+
+      if (status && status.ok) {
+        if (
+          !user.existingUser.models ||
+          user.existingUser.models === undefined
+        ) {
+          router.push("/newModel");
+        } else {
+          const models: any = Object.values(user.existingUser.models);
+          router.push("/dashboard/" + models[0].title);
+        }
+      } else if (status && !status.ok) alert("Invalid username or password");
+      else console.log("no idea");
+    } catch (err) {
+      console.log(err);
+      alert("Error getting user from getUser");
+    }
   };
 
   return (
