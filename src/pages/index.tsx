@@ -24,6 +24,7 @@ export default function Home() {
       password: password,
     });
 
+    console.log("getting user");
     // get user info from mongodb
     const res = await fetch("/api/mongo/getUser", {
       method: "POST",
@@ -35,6 +36,12 @@ export default function Home() {
       }),
     });
     const user = await res.json();
+    if (!res.ok) {
+      alert(user.message || "Bad response from getUser!");
+      return;
+    } else {
+      console.log("got user");
+    }
 
     if (status && status.ok) {
       const models: any = Object.values(user.existingUser.models);

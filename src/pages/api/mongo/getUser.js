@@ -14,6 +14,9 @@ async function handler(req, res) {
   if (client) {
     console.log("client is connected")
   }
+  else {
+    console.log("client is not connected")
+  }
 
   const db = client.db('easyAI')  
 
@@ -23,9 +26,11 @@ async function handler(req, res) {
   if (existingUser) {
     console.log("existingUser is true")
     res.status(201).json({ existingUser });
+    return;
   }
   else {
     res.status(422).json({ message: 'user not found' });
+    return;
   }
 }
 
