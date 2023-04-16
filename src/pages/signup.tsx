@@ -85,7 +85,7 @@ const Signup = (props: Props) => {
           className="hover:bg-blue hover:text-white bg-blueBg text-blue text-sm rounded p-2 px-4"
           onClick={(e) => handleSignUp(e)}
         >
-          Let's get training &rarr;
+          Let&apos;s get training &rarr;
         </button>
       </div>
     </div>
