@@ -26,17 +26,15 @@ async function handler(req, res) {
 
     if (existingUser) {
       console.log("existingUser is true")
-      res.status(201).json({ existingUser });
-      return;
+      return res.status(201).json({ existingUser });
     }
     else {
-      res.status(422).json({ message: 'user not found' });
-      return;
+      return res.status(422).json({ message: 'user not found' });
     }
   }
   catch(e) {
     console.log("error!"  + e)
-    return;
+    return res.status(422).json({ message: 'user not found' });
   }
 }
 
