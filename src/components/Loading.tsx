@@ -1,5 +1,5 @@
 import React from "react";
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 import loading from "@/images/loading.json";
 
 type Props = {};
@@ -9,7 +9,9 @@ const Loading = (props: Props) => {
     <div className="w-full h-screen flex flex-col justify-start items-center px-10">
       <div>
         <Lottie
-          options={{ loop: true, autoplay: true, animationData: loading }}
+          loop={true}
+          autoplay={true}
+          animationData={loading}
           height={200}
           width={200}
           className="-mb-20"
