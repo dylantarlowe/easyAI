@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../lib/mongo/db";
+import Loading from "@/components/Loading";
 
 type Props = {
   session: any;
@@ -22,12 +23,25 @@ const NewModel = ({ session, userInfo }: Props) => {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState<any>();
   const [fileLink, setFileLink] = useState("");
-  const [labels, setLables] = useState("Outcome");
+  const [labels, setLabels] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async () => {
+    if (title === "") {
+      alert("Please enter a title");
+      return;
+    }
+    if (file === undefined) {
+      alert("Please upload a dataset");
+      return;
+    }
+    if (labels === "") {
+      alert("Please enter labels");
+      return;
+    }
+
     let formData = new FormData();
     formData.append("projectID", title);
     if (selected === 0) formData.append("task", "Image Classification");
@@ -47,8 +61,7 @@ const NewModel = ({ session, userInfo }: Props) => {
     console.log(res);
     if (res.status === 200)
       router.push({
-        pathname: "/dashboard",
-        query: { id: title },
+        pathname: "/dashboard/" + title,
       });
     else {
       alert("Error creating model");
@@ -63,16 +76,18 @@ const NewModel = ({ session, userInfo }: Props) => {
         <div className="flex flex-col w-5/6 px-20 py-6 space-y-4">
           <p className="text-lg font-medium">Create New Model</p>
           <div className="flex">
-            {/* number 1 in grey circle */}
-            <div className="mt-1 w-5 h-5 bg-gray-300 text-white rounded-full flex items-center justify-center">
-              <p className="text-xs">1</p>
-            </div>
-            <div className="flex flex-col justify-start px-5 w-full">
-              <p className="font-medium py-1">Model Title</p>
-              <input
-                onChange={(e) => setTitle(e.target.value)}
-                className="focus:outline-gray-500 focus:outline-width-1 text-sm border-2 border-gray-300 rounded-md p-1"
-              />
+            <div className="flex flex-1">
+              {/* number 1 in grey circle */}
+              <div className="mt-1 w-5 h-5 bg-gray-300 text-white rounded-full flex items-center justify-center">
+                <p className="text-xs">1</p>
+              </div>
+              <div className="flex flex-col justify-start px-5 w-full">
+                <p className="font-medium py-1">Model Title</p>
+                <input
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="focus:outline-gray-500 focus:outline-width-1 text-sm border-2 border-gray-300 rounded-md p-1"
+                />
+              </div>
             </div>
           </div>
           <div className="flex">
@@ -127,26 +142,41 @@ const NewModel = ({ session, userInfo }: Props) => {
             </div>
           </div>
           <div className="flex">
-            <div className="mt-1 w-5 h-5 bg-gray-300 text-white rounded-full flex items-center justify-center">
-              <p className="text-xs">3</p>
+            <div className="flex flex-1">
+              <div className="mt-1 w-5 h-5 bg-gray-300 text-white rounded-full flex items-center justify-center">
+                <p className="text-xs">3</p>
+              </div>
+              <div className="flex flex-col justify-start px-5 w-full">
+                <p className="font-medium py-1 w-full">
+                  Upload your dataset here:
+                </p>
+                <div className="flex">
+                  <div className="flex-1 text-gray-400 p-1">
+                    <Dropzone file={file} setFile={setFile} />
+                  </div>
+                  {/* <div className="w-1/2 m-1 flex flex-col h-24 text-xs justify-center items-center border border-dashed border-gray-300 rounded cursor-pointer">
+                    <p className="text-xs text-gray-400 pb-1">
+                      Paste a link to your dataset here:
+                    </p>
+                    <input
+                      onChange={(e) => setFileLink(e.target.value)}
+                      className="focus:outline-gray-500 focus:outline-width-1 text-sm border w-3/4 border-gray-300 rounded-md p-1"
+                    />
+                  </div> */}
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col justify-start px-5 w-full">
-              <p className="font-medium py-1 w-full">
-                Upload your dataset here:
-              </p>
-              <div className="flex">
-                <div className="w-1/2 text-gray-400 p-1">
-                  <Dropzone file={file} setFile={setFile} />
-                </div>
-                <div className="w-1/2 m-1 flex flex-col h-24 text-xs justify-center items-center border border-dashed border-gray-300 rounded cursor-pointer">
-                  <p className="text-xs text-gray-400 pb-1">
-                    Paste a link to your dataset here:
-                  </p>
-                  <input
-                    onChange={(e) => setFileLink(e.target.value)}
-                    className="focus:outline-gray-500 focus:outline-width-1 text-sm border w-3/4 border-gray-300 rounded-md p-1"
-                  />
-                </div>
+            <div className="flex flex-1 h-24">
+              {/* number 4 in grey circle */}
+              <div className="mt-1 w-5 h-5 bg-gray-300 text-white rounded-full flex items-center justify-center">
+                <p className="text-xs">4</p>
+              </div>
+              <div className="flex flex-col justify-start px-5 w-full">
+                <p className="font-medium py-1">Name of labels column</p>
+                <input
+                  onChange={(e) => setLabels(e.target.value)}
+                  className="focus:outline-gray-500 focus:outline-width-1 text-sm border-2 border-gray-300 rounded-md p-1"
+                />
               </div>
             </div>
           </div>
@@ -160,7 +190,9 @@ const NewModel = ({ session, userInfo }: Props) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col w-5/6 px-20 py-6 space-y-4">lloading</div>
+        <div className="flex flex-col w-5/6 px-20 py-6 space-y-4">
+          <Loading />
+        </div>
       )}
     </div>
   );
@@ -177,13 +209,14 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  const client = await connectToDatabase();
+  const client: any = await connectToDatabase();
   const db = client.db("easyAI");
   const userInfoRaw = await db
     .collection("users")
     .findOne({ email: session.user?.email });
 
   const userInfo = JSON.parse(JSON.stringify(userInfoRaw));
+  client.close();
 
   return {
     props: { session, userInfo },

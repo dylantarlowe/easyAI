@@ -14,11 +14,10 @@ async function handler(req, res) {
     !password ||
     password.trim().length < 5
   ) {
-    res.status(422).json({
+    return res.status(422).json({
       message:
         'Invalid input - password should also be at least 5 characters long.',
     });
-    return;
   }
 
   const client = await connectToDatabase();
@@ -28,9 +27,7 @@ async function handler(req, res) {
   const existingUser = await db.collection('users').findOne({ email: email });
 
   if (existingUser) {
-    res.status(422).json({ message: 'User exists already!' });
-    client.close();
-    return;
+    return res.status(422).json({ message: 'User exists already!' });
   }
 
   const hashedPassword = await hashPassword(password);
@@ -40,8 +37,7 @@ async function handler(req, res) {
     password: hashedPassword,
   });
 
-  res.status(201).json({ message: 'Created user!' });
-  client.close();
+  return res.status(201).json({ message: 'Created user!' });
 }
 
 export default handler;

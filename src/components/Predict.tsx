@@ -100,8 +100,8 @@ const Predict = ({ userId, modelId, task }: Props) => {
           onClick={() => handleDownload()}
           className="bg-blue text-white text-xs rounded-md p-2 w-1/2"
         >
-          <HiOutlineDownload size={12} className="inline-block mr-1.5" />
-          Download
+          <HiOutlineDownload size={12} className="inline-block mr-1" />
+          Download Model
         </button>
         <button
           onClick={() => handlePredict()}

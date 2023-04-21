@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "../../../lib/mongo/db";
+import { Session } from "inspector";
 
 type Props = {
   session: any;
@@ -18,6 +19,15 @@ const Dashboard = ({ session, userInfo }: Props) => {
   let { model } = router.query;
   const [loading, setLoading] = useState(true);
   model = model?.toString();
+
+  useEffect(() => {
+    if (session) {
+      console.log(session);
+    }
+    if (userInfo) {
+      console.log(userInfo);
+    }
+  }, [loading]);
 
   return (
     <div className="flex bg-gray-50">
@@ -62,6 +72,7 @@ export async function getServerSideProps(context: any) {
     .findOne({ email: session.user?.email });
 
   const userInfo = JSON.parse(JSON.stringify(userInfoRaw));
+  client.close();
 
   return {
     props: { session, userInfo },
